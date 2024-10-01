@@ -5,16 +5,17 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"strconv"
-	"testApi/internal/api/DB"
-	"testApi/internal/api/Handlers"
-	"testApi/internal/api/Repositories"
+	"testApi/internal/api/db"
+	"testApi/internal/api/handlers"
+	"testApi/internal/api/middleware"
+	"testApi/internal/api/repositories"
 )
 
 type Server struct {
 	host   string
 	port   int
 	router *gin.Engine
-	Handlers.Handler
+	handlers.Handler
 }
 
 func New(host string, port int) *Server {
@@ -22,10 +23,10 @@ func New(host string, port int) *Server {
 }
 
 func (s *Server) Init() {
-	db := DB.New()
+	db := db.New()
 
-	s.Handler = Handlers.Handler{
-		Repo: Repositories.NewAlbumRepository(db),
+	s.Handler = handlers.Handler{
+		Repo: repositories.NewAlbumRepository(db),
 	}
 
 	s.router = s.setRouter()
@@ -44,6 +45,7 @@ func (s *Server) setRouter() *gin.Engine {
 	router := gin.Default()
 
 	apiGroup := router.Group("/api/v1")
+	apiGroup.Use(middleware.RequestIdMiddleware())
 	{
 		apiGroup.GET("/albums", s.GetAlbums)
 		apiGroup.GET("/albums/:id", s.GetAlbumByID)

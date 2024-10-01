@@ -1,10 +1,10 @@
-package Handlers
+package handlers
 
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
-	"testApi/internal/api/Models"
+	"testApi/internal/api/models"
 )
 
 // GetAlbums godoc
@@ -13,7 +13,7 @@ import (
 //	@Tags		albums
 //	@Accept		json
 //	@Produce	json
-//	@Success	200	{array}	Models.Album
+//	@Success	200	{array}	models.Album
 //	@Router		/albums/ [get]
 func (h *Handler) GetAlbums(c *gin.Context) {
 	albums, err := h.Repo.GetAll()
@@ -30,11 +30,11 @@ func (h *Handler) GetAlbums(c *gin.Context) {
 //	@Tags		albums
 //	@Accept		json
 //	@Produce	json
-//	@Param		request	body		Models.CreateAlbum	true	"query params"
-//	@Success	200		{object}	Models.CreateAlbum
+//	@Param		request	body		models.CreateAlbum	true	"query params"
+//	@Success	200		{object}	models.CreateAlbum
 //	@Router		/albums/ [post]
 func (h *Handler) PostAlbums(c *gin.Context) {
-	var newAlbum Models.CreateAlbum
+	var newAlbum models.CreateAlbum
 
 	if err := c.BindJSON(&newAlbum); err != nil {
 		return
@@ -62,7 +62,7 @@ func (h *Handler) PostAlbums(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id	path		int	true	"Album ID"
-//	@Success		200	{object}	Models.Album
+//	@Success		200	{object}	models.Album
 //	@Router			/albums/{id} [get]
 func (h *Handler) GetAlbumByID(c *gin.Context) {
 	param := c.Param("id")

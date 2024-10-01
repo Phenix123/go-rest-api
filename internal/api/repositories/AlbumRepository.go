@@ -1,9 +1,9 @@
-package Repositories
+package repositories
 
 import (
 	"database/sql"
 	"log"
-	"testApi/internal/api/Models"
+	"testApi/internal/api/models"
 )
 
 type AlbumRepository struct {
@@ -15,8 +15,8 @@ func NewAlbumRepository(db *sql.DB) IAlbumRepository {
 		db: db,
 	}
 }
-func (repo *AlbumRepository) GetById(id int64) (Models.Album, error) {
-	var album Models.Album
+func (repo *AlbumRepository) GetById(id int64) (models.Album, error) {
+	var album models.Album
 	row := repo.db.QueryRow("SELECT * FROM albums WHERE id = ?", id)
 	err := row.Scan(&album.ID, &album.Title, &album.Artist, &album.Price)
 	log.Println(*row, album)
@@ -26,8 +26,8 @@ func (repo *AlbumRepository) GetById(id int64) (Models.Album, error) {
 	return album, nil
 }
 
-func (repo *AlbumRepository) GetAll() ([]Models.Album, error) {
-	var albums []Models.Album
+func (repo *AlbumRepository) GetAll() ([]models.Album, error) {
+	var albums []models.Album
 	rows, err := repo.db.Query("SELECT * FROM albums")
 	if err != nil {
 		return nil, err
@@ -35,7 +35,7 @@ func (repo *AlbumRepository) GetAll() ([]Models.Album, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var album Models.Album
+		var album models.Album
 		err := rows.Scan(&album.ID, &album.Title, &album.Artist, &album.Price)
 		if err != nil {
 			return nil, err
@@ -45,7 +45,7 @@ func (repo *AlbumRepository) GetAll() ([]Models.Album, error) {
 	return albums, nil
 }
 
-func (repo *AlbumRepository) Save(album *Models.CreateAlbum) (int64, error) {
+func (repo *AlbumRepository) Save(album *models.CreateAlbum) (int64, error) {
 	res, err := repo.db.Exec("INSERT INTO albums (title, artist, price) values (?, ?, ?)", album.Title, album.Artist, album.Price)
 	if err != nil {
 		return 0, err
