@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"github.com/go-sql-driver/mysql"
 	"log"
-	"testApi/Config"
+	"testApi/config"
 )
 
 func New() *sql.DB {
@@ -14,7 +14,7 @@ func New() *sql.DB {
 }
 
 func setDBConn() (*sql.DB, error) {
-	config := Config.GetConfig()
+	config := config.GetConfig()
 	cfg := mysql.Config{
 		User:                 config.DB_USER,
 		Passwd:               config.DB_PASSWORD,
