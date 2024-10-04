@@ -31,7 +31,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/Models.Album"
+                                "$ref": "#/definitions/models.Album"
                             }
                         }
                     }
@@ -55,7 +55,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Models.CreateAlbum"
+                            "$ref": "#/definitions/models.CreateAlbum"
                         }
                     }
                 ],
@@ -63,7 +63,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/Models.CreateAlbum"
+                            "$ref": "#/definitions/models.CreateAlbum"
                         }
                     }
                 }
@@ -95,7 +95,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/Models.Album"
+                            "$ref": "#/definitions/models.Album"
                         }
                     }
                 }
@@ -103,7 +103,7 @@
         }
     },
     "definitions": {
-        "Models.Album": {
+        "models.Album": {
             "type": "object",
             "properties": {
                 "artist": {
@@ -120,7 +120,7 @@
                 }
             }
         },
-        "Models.CreateAlbum": {
+        "models.CreateAlbum": {
             "type": "object",
             "properties": {
                 "artist": {

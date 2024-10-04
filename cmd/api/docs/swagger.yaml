@@ -1,6 +1,6 @@
 basePath: /api/v1
 definitions:
-  Models.Album:
+  models.Album:
     properties:
       artist:
         type: string
@@ -11,7 +11,7 @@ definitions:
       title:
         type: string
     type: object
-  Models.CreateAlbum:
+  models.CreateAlbum:
     properties:
       artist:
         type: string
@@ -41,7 +41,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/Models.Album'
+              $ref: '#/definitions/models.Album'
             type: array
       summary: Get all albums
       tags:
@@ -55,14 +55,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/Models.CreateAlbum'
+          $ref: '#/definitions/models.CreateAlbum'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/Models.CreateAlbum'
+            $ref: '#/definitions/models.CreateAlbum'
       summary: Create new album
       tags:
       - albums
@@ -83,7 +83,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/Models.Album'
+            $ref: '#/definitions/models.Album'
       summary: Get album by id
       tags:
       - albums
