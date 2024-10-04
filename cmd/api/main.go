@@ -28,6 +28,6 @@ func init() {
 // @BasePath	/api/v1
 func main() {
 	gin.SetMode(gin.DebugMode)
-	server := api.New("localhost", 8080)
+	server := api.New("", 8080)
 	server.Init()
 }

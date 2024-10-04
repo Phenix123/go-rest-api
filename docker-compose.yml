@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - "8080:8080"  # Exposing the API to the host on port 8080
+    depends_on:
+      db:
+        condition: service_healthy  # Wait until MySQL is fully healthy
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_NAME=albums
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_container
+    ports:
+      - "3307:3306"  # Exposing MySQL port to the host machine
+    environment:
+      MYSQL_ROOT_PASSWORD: password  # Root password
+      MYSQL_DATABASE: albums             # Default database
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
+    driver: bridge

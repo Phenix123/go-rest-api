@@ -21,6 +21,7 @@ func setDBConn() (*sql.DB, error) {
 		Addr:                 config.DB_HOST + ":" + config.DB_PORT,
 		DBName:               config.DB_NAME,
 		AllowNativePasswords: true,
+		Net:                  "tcp",
 	}
 	// Get a database handle.
 	var err error
