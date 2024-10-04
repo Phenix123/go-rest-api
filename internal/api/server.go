@@ -23,10 +23,10 @@ func New(host string, port int) *Server {
 }
 
 func (s *Server) Init() {
-	db := db.New()
+	dbConn := db.New()
 
 	s.Handler = handlers.Handler{
-		Repo: repositories.NewAlbumRepository(db),
+		Repo: repositories.NewAlbumRepository(dbConn),
 	}
 
 	s.router = s.setRouter()

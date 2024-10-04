@@ -32,7 +32,12 @@ func (repo *AlbumRepository) GetAll() ([]models.Album, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func(rows *sql.Rows) {
+		err := rows.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}(rows)
 
 	for rows.Next() {
 		var album models.Album
